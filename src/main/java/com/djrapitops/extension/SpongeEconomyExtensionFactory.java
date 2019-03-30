@@ -23,6 +23,8 @@
 package com.djrapitops.extension;
 
 import com.djrapitops.plan.extension.DataExtension;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.service.economy.EconomyService;
 
 import java.util.Optional;
 
@@ -31,12 +33,12 @@ import java.util.Optional;
  *
  * @author Rsl1122
  */
-public class NewExtensionFactory {
+public class SpongeEconomyExtensionFactory {
 
     private boolean isAvailable() {
         try {
-            Class.forName("");
-            return true;
+            Class.forName("org.spongepowered.api.Sponge");
+            return Sponge.getServiceManager().provide(EconomyService.class).isPresent();
         } catch (ClassNotFoundException e) {
             return false;
         }
@@ -44,7 +46,7 @@ public class NewExtensionFactory {
 
     public Optional<DataExtension> createExtension() {
         if (isAvailable()) {
-            return Optional.of(new NewExtension());
+            return Sponge.getServiceManager().provide(EconomyService.class).map(SpongeEconomyExtension::new);
         }
         return Optional.empty();
     }
