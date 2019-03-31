@@ -39,7 +39,7 @@ public class SpongeEconomyExtensionFactory {
         try {
             Class.forName("org.spongepowered.api.Sponge");
             return Sponge.getServiceManager().provide(EconomyService.class).isPresent();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | /* Sponge is not initialized */ IllegalStateException e) {
             return false;
         }
     }

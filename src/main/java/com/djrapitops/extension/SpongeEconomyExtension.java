@@ -22,6 +22,7 @@
 */
 package com.djrapitops.extension;
 
+import com.djrapitops.plan.extension.CallEvents;
 import com.djrapitops.plan.extension.DataExtension;
 import com.djrapitops.plan.extension.annotation.*;
 import com.djrapitops.plan.extension.icon.Color;
@@ -52,6 +53,15 @@ public class SpongeEconomyExtension implements DataExtension {
 
     SpongeEconomyExtension(EconomyService eco) {
         this.eco = eco;
+    }
+
+    @Override
+    public CallEvents[] callExtensionMethodsOn() {
+        return new CallEvents[]{
+                CallEvents.PLAYER_JOIN,
+                CallEvents.PLAYER_JOIN,
+                CallEvents.SERVER_EXTENSION_REGISTER
+        };
     }
 
     @BooleanProvider(
