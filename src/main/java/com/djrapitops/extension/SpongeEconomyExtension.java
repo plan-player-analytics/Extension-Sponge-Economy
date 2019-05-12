@@ -81,7 +81,10 @@ public class SpongeEconomyExtension implements DataExtension {
     @DoubleProvider(
             text = "Balance (Default Currency)",
             description = "How much currency the player has.",
-            iconName = "money-bill-wave", priority = 100, iconColor = Color.AMBER
+            iconName = "money-bill-wave",
+            priority = 100,
+            iconColor = Color.AMBER,
+            showInPlayerTable = true
     )
     public double balance(UUID playerUUID) {
         Currency defaultCurrency = eco.getDefaultCurrency();
@@ -93,7 +96,9 @@ public class SpongeEconomyExtension implements DataExtension {
     @StringProvider(
             text = "Default Currency",
             description = "What currency is used by default.",
-            iconName = "money-bill-wave", priority = 101, iconColor = Color.AMBER
+            iconName = "money-bill-wave",
+            priority = 101,
+            iconColor = Color.AMBER
     )
     public String defaultCurrency() {
         return eco.getDefaultCurrency().getDisplayName().toPlain();
