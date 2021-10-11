@@ -38,7 +38,7 @@ public class SpongeEconomyExtensionFactory {
     private boolean isAvailable() {
         try {
             Class.forName("org.spongepowered.api.Sponge");
-            return Sponge.getServiceManager().provide(EconomyService.class).isPresent();
+            return Sponge.serviceProvider().provide(EconomyService.class).isPresent();
         } catch (ClassNotFoundException | /* Sponge is not initialized */ IllegalStateException e) {
             return false;
         }
@@ -46,7 +46,7 @@ public class SpongeEconomyExtensionFactory {
 
     public Optional<DataExtension> createExtension() {
         if (isAvailable()) {
-            return Sponge.getServiceManager().provide(EconomyService.class).map(SpongeEconomyExtension::new);
+            return Sponge.serviceProvider().provide(EconomyService.class).map(SpongeEconomyExtension::new);
         }
         return Optional.empty();
     }
