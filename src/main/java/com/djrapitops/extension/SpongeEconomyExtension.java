@@ -27,6 +27,7 @@ import com.djrapitops.plan.extension.DataExtension;
 import com.djrapitops.plan.extension.annotation.*;
 import com.djrapitops.plan.extension.icon.Color;
 import com.djrapitops.plan.extension.icon.Family;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.spongepowered.api.service.economy.Currency;
 import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.service.economy.account.UniqueAccount;
@@ -74,7 +75,7 @@ public class SpongeEconomyExtension implements DataExtension {
     }
 
     public Optional<UniqueAccount> getAccount(UUID playerUUID) {
-        return eco.getOrCreateAccount(playerUUID);
+        return eco.findOrCreateAccount(playerUUID);
     }
 
     @Conditional("hasAccount")
@@ -87,8 +88,8 @@ public class SpongeEconomyExtension implements DataExtension {
             showInPlayerTable = true
     )
     public double balance(UUID playerUUID) {
-        Currency defaultCurrency = eco.getDefaultCurrency();
-        BigDecimal balance = getAccount(playerUUID).map(account -> account.getBalance(defaultCurrency)).orElse(BigDecimal.ZERO);
+        Currency defaultCurrency = eco.defaultCurrency();
+        BigDecimal balance = getAccount(playerUUID).map(account -> account.balance(defaultCurrency)).orElse(BigDecimal.ZERO);
 
         return balance.doubleValue();
     }
@@ -101,6 +102,6 @@ public class SpongeEconomyExtension implements DataExtension {
             iconColor = Color.AMBER
     )
     public String defaultCurrency() {
-        return eco.getDefaultCurrency().getDisplayName().toPlain();
+        return PlainTextComponentSerializer.plainText().serialize(eco.defaultCurrency().displayName());
     }
 }
